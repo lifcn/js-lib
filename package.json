@@ -1,7 +1,7 @@
 {
   "name": "eoneo-js-sdk-v2",
   "version": "0.0.0",
-  "main": "index.js",
+  "main": "dist/eoneopay.umd.js",
   "description": "Eoneo javascript SDK",
   "keywords": [
     "javscript",
@@ -13,9 +13,64 @@
   "license": "MIT",
   "scripts": {
     "docs:dev": "vuepress dev doc",
-    "docs:build": "vuepress build doc"
+    "docs:build": "vuepress build doc",
+    "lint": "tslint",
+    "test": "jest",
+    "build": "rm -rf dist && rollup -c",
+    "watch": "rollup -c -w",
+    "release": "semantic-release -t 'v${version}'"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "cross-env PRE_COMMIT=true lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "git add",
+      "yarn test"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^7.1.2",
+    "@commitlint/config-conventional": "^7.1.2",
+    "@types/activex-excel": "^14.0.5",
+    "@types/faker": "^4.1.4",
+    "@types/jest": "^23.3.2",
+    "commitizen": "^3.0.0",
+    "core-js": "^2.5.7",
+    "cross-env": "^5.2.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "faker": "^4.1.0",
+    "husky": "^1.0.1",
+    "jest": "^23.6.0",
+    "jest-config": "^23.6.0",
+    "lint-staged": "^7.3.0",
+    "lodash": "^4.3.0",
+    "rollup": "^1.19.4",
+    "rollup-plugin-commonjs": "^10.0.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.1",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.22.1",
+    "semantic-release": "^15.9.16",
+    "ts-jest": "^23.10.2",
+    "ts-loader": "^5.3.0",
+    "tslint": "^5.11.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.0.3",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "vuepress": "^1.0.3"
   }
 }
