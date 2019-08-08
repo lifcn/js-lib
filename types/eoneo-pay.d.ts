@@ -4,13 +4,13 @@ export default class EoneoPay {
     private apiUrl;
     constructor(token: string);
     private getCardTypeByNumber;
+    private luhnCheck;
+    private sendRequest;
     getCardTypeByName(name?: string): CardType | undefined;
     getPaySystem(cardNumber: string | number): string;
     validateAccountNumber(accountNumber: string | number): boolean;
     validateAccountName(name: string): boolean;
     validateCardNumber(_cardNumber: string | number): boolean;
-    luhnCheck(cardNumber: string): boolean;
-    sendRequest(type: string | undefined, endpoint: string, data?: any): Promise<unknown>;
     tokeniseCard(data: any): Promise<unknown>;
     tokeniseAccount(data: any): Promise<unknown>;
     getTokenInfo(token: string): Promise<unknown>;

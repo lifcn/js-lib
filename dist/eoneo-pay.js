@@ -105,31 +105,6 @@ var EoneoPay = /** @class */ (function () {
             return cardType.patterns.test(cardNumber);
         });
     };
-    EoneoPay.prototype.getCardTypeByName = function (name) {
-        if (name === void 0) { name = ''; }
-        return CARD_TYPES.find(function (cardType) {
-            return cardType.name === name;
-        });
-    };
-    EoneoPay.prototype.getPaySystem = function (cardNumber) {
-        var cardType = this.getCardTypeByNumber(String(cardNumber));
-        return cardType ? cardType.name : '';
-    };
-    EoneoPay.prototype.validateAccountNumber = function (accountNumber) {
-        return /^[0-9]{6,9}$/.test(String(accountNumber));
-    };
-    EoneoPay.prototype.validateAccountName = function (name) {
-        return /^.{6,100}$/.test(name);
-    };
-    EoneoPay.prototype.validateCardNumber = function (_cardNumber) {
-        var cardNumber = String(_cardNumber);
-        var cardType = this.getCardTypeByNumber(cardNumber);
-        if (!cardType)
-            return false;
-        var lengthValid = cardType.length.test(String(cardNumber.length));
-        var luhnValid = this.luhnCheck(cardNumber);
-        return lengthValid && luhnValid;
-    };
     EoneoPay.prototype.luhnCheck = function (cardNumber) {
         var arr = [0, 2, 4, 6, 8, 1, 3, 5, 7, 9];
         var len = cardNumber.length;
@@ -181,6 +156,31 @@ var EoneoPay = /** @class */ (function () {
             };
             xhr.send(data);
         });
+    };
+    EoneoPay.prototype.getCardTypeByName = function (name) {
+        if (name === void 0) { name = ''; }
+        return CARD_TYPES.find(function (cardType) {
+            return cardType.name === name;
+        });
+    };
+    EoneoPay.prototype.getPaySystem = function (cardNumber) {
+        var cardType = this.getCardTypeByNumber(String(cardNumber));
+        return cardType ? cardType.name : '';
+    };
+    EoneoPay.prototype.validateAccountNumber = function (accountNumber) {
+        return /^[0-9]{6,9}$/.test(String(accountNumber));
+    };
+    EoneoPay.prototype.validateAccountName = function (name) {
+        return /^.{6,100}$/.test(name);
+    };
+    EoneoPay.prototype.validateCardNumber = function (_cardNumber) {
+        var cardNumber = String(_cardNumber);
+        var cardType = this.getCardTypeByNumber(cardNumber);
+        if (!cardType)
+            return false;
+        var lengthValid = cardType.length.test(String(cardNumber.length));
+        var luhnValid = this.luhnCheck(cardNumber);
+        return lengthValid && luhnValid;
     };
     EoneoPay.prototype.tokeniseCard = function (data) {
         data.type = 'credit_card';

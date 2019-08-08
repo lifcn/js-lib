@@ -27,9 +27,12 @@
     }
   },
   "lint-staged": {
-    "{src,test}/**/*.ts": [
-      "git add",
-      "yarn test"
+    "*": [
+      "yarn test ./"
+    ],
+    "*.ts": [
+      "tslint --fix",
+      "git add"
     ]
   },
   "config": {

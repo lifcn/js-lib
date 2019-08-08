@@ -15,39 +15,7 @@ export default class EoneoPay {
     })
   }
 
-  getCardTypeByName(name: string = ''): CardType | undefined {
-    return CARD_TYPES.find(cardType => {
-      return cardType.name === name
-    })
-  }
-
-  getPaySystem(cardNumber: string | number): string {
-    const cardType = this.getCardTypeByNumber(String(cardNumber))
-
-    return cardType ? cardType.name : ''
-  }
-
-  validateAccountNumber(accountNumber: string | number): boolean {
-    return /^[0-9]{6,9}$/.test(String(accountNumber))
-  }
-
-  validateAccountName(name: string): boolean {
-    return /^.{6,100}$/.test(name)
-  }
-
-  validateCardNumber(_cardNumber: string | number): boolean {
-    const cardNumber = String(_cardNumber)
-    const cardType = this.getCardTypeByNumber(cardNumber)
-
-    if (!cardType) return false
-
-    const lengthValid = cardType.length.test(String(cardNumber.length))
-    const luhnValid = this.luhnCheck(cardNumber)
-
-    return lengthValid && luhnValid
-  }
-
-  luhnCheck(cardNumber: string): boolean {
+  private luhnCheck(cardNumber: string): boolean {
     const arr = [0, 2, 4, 6, 8, 1, 3, 5, 7, 9]
     let len = cardNumber.length
     let bit = 1
@@ -63,7 +31,7 @@ export default class EoneoPay {
     return !!sum && sum % 10 === 0
   }
 
-  sendRequest(type = 'POST', endpoint: string, data?: any) {
+  private sendRequest(type = 'POST', endpoint: string, data?: any) {
     let xhr: XMLHttpRequest
 
     if (XMLHttpRequest) {
@@ -106,6 +74,38 @@ export default class EoneoPay {
     })
   }
 
+  getCardTypeByName(name: string = ''): CardType | undefined {
+    return CARD_TYPES.find(cardType => {
+      return cardType.name === name
+    })
+  }
+
+  getPaySystem(cardNumber: string | number): string {
+    const cardType = this.getCardTypeByNumber(String(cardNumber))
+
+    return cardType ? cardType.name : ''
+  }
+
+  validateAccountNumber(accountNumber: string | number): boolean {
+    return /^[0-9]{6,9}$/.test(String(accountNumber))
+  }
+
+  validateAccountName(name: string): boolean {
+    return /^.{6,100}$/.test(name)
+  }
+
+  validateCardNumber(_cardNumber: string | number): boolean {
+    const cardNumber = String(_cardNumber)
+    const cardType = this.getCardTypeByNumber(cardNumber)
+
+    if (!cardType) return false
+
+    const lengthValid = cardType.length.test(String(cardNumber.length))
+    const luhnValid = this.luhnCheck(cardNumber)
+
+    return lengthValid && luhnValid
+  }
+
   tokeniseCard(data: any) {
     data.type = 'credit_card'
     return this.sendRequest('POST', '/tokens', JSON.stringify(data))
@@ -114,6 +114,7 @@ export default class EoneoPay {
   tokeniseAccount(data: any) {
     data.country = 'AU'
     data.type = 'bank_account'
+
     return this.sendRequest('POST', '/tokens', JSON.stringify(data))
   }
 
