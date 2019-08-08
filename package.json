@@ -1,0 +1,21 @@
+{
+  "name": "eoneo-js-sdk-v2",
+  "version": "0.0.0",
+  "main": "index.js",
+  "description": "Eoneo javascript SDK",
+  "keywords": [
+    "javscript",
+    "sdk",
+    "eoneopay"
+  ],
+  "repository": "https://github.com/loyaltycorp/eoneo-js-sdk-v2.git",
+  "author": "GenaRazmakhnin <gena.razmakhnin@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vuepress dev doc",
+    "docs:build": "vuepress build doc"
+  },
+  "devDependencies": {
+    "vuepress": "^1.0.3"
+  }
+}
