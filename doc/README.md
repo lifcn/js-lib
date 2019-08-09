@@ -16,6 +16,7 @@ const eoneo = eoneo.tokeniseCard({
   "number": "5123450000000008",
 })
 ```
+<CardForm />
 ### Tokenise bank account
 ```javascript
 const eoneo = eoneo.tokeniseAccount({
@@ -24,6 +25,7 @@ const eoneo = eoneo.tokeniseAccount({
   "prefix": "123456",
 })
 ```
+<AccountForm />
 ## Helpers
 ### Get card name
 ```javascript
@@ -38,8 +40,5 @@ eoneo.validateAccountNumber('021000021') // => true/false
 ```javascript
 eoneo.validateCardNumber('5123450000000008') // => true/false
 ```
-### Card CVC validation
-```javascript
-eoneo.validateCVC('513', 'visa') // => true/false
-```
+
 

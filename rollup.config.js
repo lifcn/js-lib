@@ -8,7 +8,8 @@ export default [
     input: 'src/index.ts',
     output: [
       { file: 'dist/eoneo-pay.js', format: 'cjs' },
-      { file: 'dist/eoneo-pay.min.js', format: 'cjs' }
+      { file: 'dist/eoneo-pay.min.js', format: 'cjs' },
+      { file: 'doc/.vuepress/public/eoneo-pay.min.js', format: 'cjs' }
     ],
 		plugins: [
       typescript({
