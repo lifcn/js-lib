@@ -43,7 +43,7 @@ export default class EoneoPay {
         throw new Error('current platform does not support XMLHttpRequest')
       }
     }
-
+    xhr.responseType = 'json'
     xhr.open(type, this.apiUrl + endpoint, true)
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(this.token + ':'))
     xhr.setRequestHeader('Content-type', 'application/vnd.eoneopay.v1+json')
@@ -51,11 +51,7 @@ export default class EoneoPay {
 
     return new Promise((resolve, reject) => {
       xhr.onload = () => {
-        resolve({
-          status: xhr.status,
-          statusText: xhr.statusText,
-          response: xhr.response
-        })
+        resolve(xhr.response)
       }
 
       xhr.onerror = () => {

@@ -2,10 +2,10 @@ module.exports = {
   testEnvironment: 'jsdom',
   testRegex: 'tests/.*\\.test.ts',
   transform: {
-    '.ts': 'ts-jest',
+    '.ts': 'ts-jest'
   },
   modulePaths: [
-    '<rootDir>/src',
+    '<rootDir>/src'
   ],
-  moduleFileExtensions: ['ts', 'js'],
+  moduleFileExtensions: ['ts', 'js']
 }

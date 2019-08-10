@@ -1,7 +1,8 @@
 {
   "name": "eoneo-js-sdk-v2",
   "version": "0.0.0",
-  "main": "dist/eoneopay.umd.js",
+  "main": "dist/eoneopay.common.js",
+  "browser": "dist/eoneopay.js",
   "description": "Eoneo javascript SDK",
   "keywords": [
     "javscript",
@@ -12,9 +13,10 @@
   "author": "GenaRazmakhnin <gena.razmakhnin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "docs:dev": "vuepress dev doc",
-    "docs:build": "vuepress build doc",
-    "lint": "tslint",
+    "dev": "run-p watch docs:dev",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "lint": "eslint . --fix --ext .js,.vue && stylelint \"docs/.vuepress/**/*.vue\" \"docs/.vuepress/**/*.scss\" --fix && prettier --list-different --write \"**/*.{json,md}\" && markdownlint **/*.md",
     "test": "jest",
     "build": "rm -rf dist && rollup -c",
     "watch": "rollup -c -w",
@@ -33,6 +35,24 @@
     "*.ts": [
       "tslint --fix",
       "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.vue": [
+      "eslint  --fix",
+      "stylelint --fix",
+      "git add"
+    ],
+    "*.scss": [
+      "stylelint --fix",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --write",
+      "markdownlint",
+      "git add"
     ]
   },
   "config": {
@@ -46,21 +66,29 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
     "@types/activex-excel": "^14.0.5",
     "@types/faker": "^4.1.4",
     "@types/jest": "^23.3.2",
+    "@vue/cli-plugin-babel": "^3.10.0",
+    "@vue/cli-plugin-eslint": "^3.10.0",
+    "@vue/eslint-config-standard": "^4.0.0",
     "commitizen": "^3.0.0",
     "core-js": "^2.5.7",
     "cross-env": "^5.2.0",
     "cz-conventional-changelog": "^2.1.0",
+    "eslint-plugin-vue": "^5.2.3",
     "faker": "^4.1.0",
     "husky": "^1.0.1",
     "jest": "^23.6.0",
     "jest-config": "^23.6.0",
     "lint-staged": "^7.3.0",
     "lodash": "^4.3.0",
+    "markdownlint-cli": "^0.17.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2",
     "rollup": "^1.19.4",
     "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-node-resolve": "^5.2.0",
@@ -68,6 +96,11 @@
     "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-typescript2": "^0.22.1",
     "semantic-release": "^15.9.16",
+    "stylelint": "^10.1.0",
+    "stylelint-config-css-modules": "^1.4.0",
+    "stylelint-config-recess-order": "^2.0.3",
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-scss": "^3.9.3",
     "ts-jest": "^23.10.2",
     "ts-loader": "^5.3.0",
     "tslint": "^5.11.0",

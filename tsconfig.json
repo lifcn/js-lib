@@ -3,20 +3,12 @@
     "moduleResolution": "node",
     "target": "es5",
     "module": "es2015",
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "eoneo-pay": [
-        "src/eoneo-pay.ts",
-        "dist/eoneo-pay.js",
-      ],
-      "*": [
-        "src/*"
-      ],
+      "eoneo-pay": ["src/eoneo-pay.ts", "dist/eoneo-pay.js"],
+      "*": ["src/*"]
     },
     "sourceMap": true,
     "allowSyntheticDefaultImports": false,
@@ -24,10 +16,6 @@
     "declaration": true,
     "declarationDir": "types"
   },
-  "include": [
-    "src/**/*.ts",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }
