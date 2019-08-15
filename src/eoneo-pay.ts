@@ -1,10 +1,38 @@
 import { CARD_TYPES, CardType } from './card-types'
+import {
+  EoneoPayConstructor,
+  EoneoCallback,
+  EoneoTokeniseCardPayload,
+  EoneoTokeniseAccountPayload,
+} from 'types/library'
+import {
+  EoneoAccount,
+  EoneoCard,
+  EoneoToken,
+} from 'types/server'
 
 export default class EoneoPay {
-  constructor(public token: string, private apiUrl: string = 'https://pay.eoneopay.com') {
-    if (!token) {
+
+  constructor(private params: EoneoPayConstructor | string) {
+    if (!params || (typeof params === 'object' && !params.token)) {
       throw new Error('token is required')
     }
+  }
+
+  get token(): string {
+    const { params } = this
+
+    return typeof params === 'string' ? params : params.token
+  }
+
+  get url(): string {
+    const { params } = this
+
+    if (typeof params === 'object' && params.url) {
+      return params.url
+    }
+
+    return 'https://pay.eoneopay.com'
   }
 
   private getCardTypeByNumber(cardNumber: string = ''): CardType | undefined {
@@ -29,7 +57,12 @@ export default class EoneoPay {
     return !!sum && sum % 10 === 0
   }
 
-  private sendRequest(type = 'POST', endpoint: string, data?: any) {
+  private sendRequest(params: {
+    endpoint: string
+    type: 'POST' | 'GET'
+    data?: any
+    callback?: EoneoCallback<any>
+  }): any {
     let xhr: XMLHttpRequest
 
     if (XMLHttpRequest) {
@@ -41,31 +74,64 @@ export default class EoneoPay {
         throw new Error('current platform does not support XMLHttpRequest')
       }
     }
+
+    const { callback } = params
+    const url = this.url + params.endpoint
+
     xhr.responseType = 'json'
-    xhr.open(type, this.apiUrl + endpoint, true)
+    xhr.open('POST', url, true)
     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(this.token + ':'))
     xhr.setRequestHeader('Content-type', 'application/vnd.eoneopay.v1+json')
     xhr.setRequestHeader('Accept', 'application/json')
 
-    return new Promise((resolve, reject) => {
+    const catchSuccess = (resolve?: Function) => {
       xhr.onload = () => {
-        resolve(xhr.response)
-      }
+        if (typeof callback === 'function') {
+          callback(null, xhr.response)
+        }
 
+        if (typeof resolve === 'function') {
+          resolve(xhr.response)
+        }
+      }
+    }
+
+    const catchError = (reject?: Function) => {
       xhr.onerror = () => {
         let message = 'unsuccessful request'
+
         if (xhr.status === 401) {
           message = 'user is not authorized'
         }
 
-        reject({
+        const error = {
           message,
           name: 'eoneo-exception',
-        })
-      }
+        }
 
-      xhr.send(data)
-    })
+        if (typeof callback === 'function') {
+          callback(error)
+        }
+
+        if (typeof reject === 'function') {
+          reject(error)
+        }
+      }
+    }
+
+    const body = params.data ? JSON.stringify(params.data) : null
+
+    if (Promise) {
+      return new Promise((resolve, reject) => {
+        catchSuccess(resolve)
+        catchError(reject)
+        xhr.send(body)
+      })
+    } else {
+      catchSuccess()
+      catchError()
+      xhr.send(body)
+    }
   }
 
   getCardTypeByName(name: string = ''): CardType | undefined {
@@ -100,19 +166,43 @@ export default class EoneoPay {
     return lengthValid && luhnValid
   }
 
-  tokeniseCard(data: any) {
+  tokeniseCard(
+    data: EoneoTokeniseCardPayload,
+    callback?: EoneoCallback<EoneoCard>
+  ): Promise<EoneoCard> {
     data.type = 'credit_card'
-    return this.sendRequest('POST', '/tokens', JSON.stringify(data))
+
+    return this.sendRequest({
+      type: 'POST',
+      endpoint: '/tokens',
+      data,
+      callback,
+    })
   }
 
-  tokeniseAccount(data: any) {
+  tokeniseAccount(
+    data: EoneoTokeniseAccountPayload,
+    callback?: EoneoCallback<EoneoAccount>
+  ): Promise<EoneoAccount> {
     data.country = 'AU'
     data.type = 'bank_account'
 
-    return this.sendRequest('POST', '/tokens', JSON.stringify(data))
+    return this.sendRequest({
+      type: 'POST',
+      endpoint: '/tokens',
+      data,
+      callback,
+    })
   }
 
-  getTokenInfo(token: string) {
-    return this.sendRequest('GET', '/tokens/' + token)
+  getTokenInfo(
+    token: string,
+    callback?: EoneoCallback<EoneoToken>
+  ): Promise<EoneoToken> {
+    return this.sendRequest({
+      endpoint: `/tokens/${token}`,
+      type: 'GET',
+      callback,
+    })
   }
 }
