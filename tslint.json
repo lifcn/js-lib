@@ -14,6 +14,7 @@
     "member-access": [true, "no-public"],
     "semicolon": [true, "never"],
     "space-before-function-paren": false,
+    "no-floating-promises": false,
     "trailing-comma": [true, "always"]
   }
 }

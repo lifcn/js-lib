@@ -4,24 +4,58 @@
 
 ```javascript
 const eoneo = new EoneoPay('MN6FWJJ3P77WHAE6')
+```
 
-// Alternative API endpoint
-const eoneo = new EoneoPay('MN6FWJJ3P77WHAE6', 'https://pay.eoneopay.com')
+Alternative API endpoint
+
+```javascript
+const eoneo = new EoneoPay({
+  token: 'MN6FWJJ3P77WHAE6',
+  url: 'https://pay.eoneopay.com',
+})
 ```
 
 ## Tokenise
 
 ### Tokenise card
 
+Promise
+
 ```javascript
-const eoneo = eoneo.tokeniseCard({
-  expiry: {
-    month: '11',
-    year: '2099',
+eoneo
+  .tokeniseCard({
+    expiry: {
+      month: '11',
+      year: '2099',
+    },
+    name: 'User Name',
+    number: '5123450000000008',
+  })
+  .then(response => {
+    console.log(response)
+  })
+  .catch(error => {
+    console.error(error.message)
+  })
+```
+
+Callback
+
+```javascript
+eoneo.tokeniseCard(
+  {
+    expiry: {
+      month: '11',
+      year: '2099',
+    },
+    name: 'User Name',
+    number: '5123450000000008',
   },
-  name: 'User Name',
-  number: '5123450000000008',
-})
+  (err, response) => {
+    if (err) throw err
+    console.log(response)
+  }
+)
 ```
 
 <CardForm />
