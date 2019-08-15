@@ -1,9 +1,7 @@
 import { CARD_TYPES, CardType } from './card-types'
 
 export default class EoneoPay {
-  private apiUrl: string = 'https://pay.eoneopay.com'
-
-  constructor(public token: string) {
+  constructor(public token: string, private apiUrl: string = 'https://pay.eoneopay.com') {
     if (!token) {
       throw new Error('token is required')
     }

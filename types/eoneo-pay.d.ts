@@ -2,7 +2,7 @@ import { CardType } from './card-types';
 export default class EoneoPay {
     token: string;
     private apiUrl;
-    constructor(token: string);
+    constructor(token: string, apiUrl?: string);
     private getCardTypeByNumber;
     private luhnCheck;
     private sendRequest;

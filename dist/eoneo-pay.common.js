@@ -92,9 +92,10 @@ var CARD_TYPES = [
 ];
 
 var EoneoPay = /** @class */ (function () {
-    function EoneoPay(token) {
+    function EoneoPay(token, apiUrl) {
+        if (apiUrl === void 0) { apiUrl = 'https://pay.eoneopay.com'; }
         this.token = token;
-        this.apiUrl = 'https://pay.eoneopay.com';
+        this.apiUrl = apiUrl;
         if (!token) {
             throw new Error('token is required');
         }

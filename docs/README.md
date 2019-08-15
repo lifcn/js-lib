@@ -1,9 +1,12 @@
 # EoneoPay SDK v2.0
 
-## Instanciate
+## Instantiate
 
 ```javascript
-const eoneo = EoneoPay('MN6FWJJ3P77WHAE6')
+const eoneo = new EoneoPay('MN6FWJJ3P77WHAE6')
+
+// Alternative API endpoint
+const eoneo = new EoneoPay('MN6FWJJ3P77WHAE6', 'https://pay.eoneopay.com')
 ```
 
 ## Tokenise
