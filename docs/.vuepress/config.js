@@ -12,5 +12,12 @@ module.exports = {
       .use(CopyPlugin, [
         ['dist/eoneo-pay.iife.js'],
       ]);
+
+    // config.module
+    //   .rule('sass')
+    //   .test(/\.sass$/)
+    //   .use('sass-loader')
+    //     .loader('sass-loader')
+    //     .end()
   }
 }
