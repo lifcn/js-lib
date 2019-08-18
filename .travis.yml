@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "11"
+
+script:
+  - yarn build
+
+cache:
+  yarn: true
+
+deploy:
+  - provider: npm
+    api_key: $NPM_KEY
+    skip_cleanup: true
+    on:
+      branch: master
+      repo: loyaltycorp/eoneo-js-sdk-v2
+      tags: true
