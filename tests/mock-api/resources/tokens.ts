@@ -1,5 +1,5 @@
 
-module.exports =  {
+export default {
   account: {
     'country': 'AU',
     'created_at': '2019-01-29T21:54:16Z',

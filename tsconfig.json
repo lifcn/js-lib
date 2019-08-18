@@ -11,7 +11,6 @@
       "*": ["src/*"]
     },
     "sourceMap": true,
-    "allowJs": true,
     "allowSyntheticDefaultImports": false,
     "esModuleInterop": true,
     "declaration": true,

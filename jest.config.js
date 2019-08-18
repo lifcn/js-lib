@@ -1,6 +1,11 @@
 process.env.MOCK_API_PORT = process.env.MOCK_API_PORT || 9000
 
 module.exports = {
+  globals: {
+    'ts-jest': {
+      diagnostics: false,
+    }
+  },
   testEnvironment: 'jsdom',
   testRegex: 'tests/.*\\.test.ts',
   transform: {

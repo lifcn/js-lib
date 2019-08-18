@@ -1,11 +1,16 @@
-const tokens = require('../resources/tokens')
+import { Express } from 'express'
+import tokens from '../resources/tokens'
 
-module.exports = app => {
+export default (app: Express) => {
+
+  app.get('/tokens/:id', (req, res) => {
+    res.send(tokens.card)
+  })
+
   app.post('/tokens', (req, res) => {
     const body = req.body
 
     if (body.type === 'bank_account') {
-
       if (body.number) {
         return res.json(tokens.account)
       }
