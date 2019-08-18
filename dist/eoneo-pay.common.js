@@ -91,15 +91,69 @@ var CARD_TYPES = [
     }
 ];
 
+var msg = {
+    invalidCardNumber: 'invalid card number',
+    invalidCardName: 'invalid card name',
+    invalidAccountName: 'invalid account name',
+    invalidAccountNumber: 'invalid account number',
+    expiryRequired: 'expiry.month and expiry.year is required',
+    accountPrefixRequired: 'account prefix is required',
+    expiryMonthLength: 'expiry month has to consist of 2 symbols',
+    expiryYearLength: 'expiry year has to consist of 4 symbols',
+    tokenRequired: 'token is required',
+    unauthorized: 'user is not authorized',
+    requestError: 'unsuccessful request',
+};
+
+function createError(message) {
+    return {
+        name: 'eoneo-exception',
+        message: message,
+    };
+}
+function emitError(message, callback) {
+    var msg = message;
+    if (msg instanceof Array) {
+        msg = msg.join(', ');
+    }
+    var error = createError(msg);
+    if (typeof callback === 'function') {
+        callback(error);
+    }
+    else if (Promise) {
+        return Promise.reject(error);
+    }
+    else {
+        return error;
+    }
+}
+
 var EoneoPay = /** @class */ (function () {
-    function EoneoPay(token, apiUrl) {
-        if (apiUrl === void 0) { apiUrl = 'https://pay.eoneopay.com'; }
-        this.token = token;
-        this.apiUrl = apiUrl;
-        if (!token) {
+    function EoneoPay(params) {
+        this.params = params;
+        if (!params || (typeof params === 'object' && !params.token)) {
             throw new Error('token is required');
         }
     }
+    Object.defineProperty(EoneoPay.prototype, "token", {
+        get: function () {
+            var params = this.params;
+            return typeof params === 'string' ? params : params.token;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(EoneoPay.prototype, "url", {
+        get: function () {
+            var params = this.params;
+            if (typeof params === 'object' && params.url) {
+                return params.url;
+            }
+            return 'https://pay.eoneopay.com';
+        },
+        enumerable: true,
+        configurable: true
+    });
     EoneoPay.prototype.getCardTypeByNumber = function (cardNumber) {
         if (cardNumber === void 0) { cardNumber = ''; }
         return CARD_TYPES.find(function (cardType) {
@@ -119,8 +173,7 @@ var EoneoPay = /** @class */ (function () {
         }
         return !!sum && sum % 10 === 0;
     };
-    EoneoPay.prototype.sendRequest = function (type, endpoint, data) {
-        if (type === void 0) { type = 'POST'; }
+    EoneoPay.prototype.sendRequest = function (params) {
         var xhr;
         if (XMLHttpRequest) {
             xhr = new XMLHttpRequest();
@@ -133,27 +186,53 @@ var EoneoPay = /** @class */ (function () {
                 throw new Error('current platform does not support XMLHttpRequest');
             }
         }
+        var callback = params.callback;
+        var url = this.url + params.endpoint;
         xhr.responseType = 'json';
-        xhr.open(type, this.apiUrl + endpoint, true);
+        xhr.open(params.type, url, true);
         xhr.setRequestHeader('Authorization', 'Basic ' + btoa(this.token + ':'));
         xhr.setRequestHeader('Content-type', 'application/vnd.eoneopay.v1+json');
         xhr.setRequestHeader('Accept', 'application/json');
-        return new Promise(function (resolve, reject) {
-            xhr.onload = function () {
-                resolve(xhr.response);
-            };
+        var catchError = function (msg, reject) {
+            var error = createError(msg);
+            if (typeof callback === 'function') {
+                callback(error);
+            }
+            else if (typeof reject === 'function') {
+                reject(error);
+            }
+        };
+        var body = params.data ? JSON.stringify(params.data) : null;
+        var wrapper = function (resolve, reject) {
             xhr.onerror = function () {
-                var message = 'unsuccessful request';
-                if (xhr.status === 401) {
-                    message = 'user is not authorized';
-                }
-                reject({
-                    message: message,
-                    name: 'eoneo-exception',
-                });
+                catchError(msg.requestError, reject);
             };
-            xhr.send(data);
-        });
+            xhr.onload = function () {
+                var status = String(xhr.status);
+                var response = xhr.response || {};
+                if (/^2/.test(status)) {
+                    if (typeof callback === 'function') {
+                        callback(null, xhr.response);
+                    }
+                    if (typeof resolve === 'function') {
+                        resolve(xhr.response);
+                    }
+                }
+                else if (/401/.test(status)) {
+                    catchError(msg.unauthorized, reject);
+                }
+                else {
+                    catchError(response.message || xhr.statusText, reject);
+                }
+            };
+            xhr.send(body);
+        };
+        if (Promise && !callback) {
+            return new Promise(wrapper);
+        }
+        else {
+            wrapper();
+        }
     };
     EoneoPay.prototype.getCardTypeByName = function (name) {
         if (name === void 0) { name = ''; }
@@ -161,9 +240,12 @@ var EoneoPay = /** @class */ (function () {
             return cardType.name === name;
         });
     };
-    EoneoPay.prototype.getPaySystem = function (cardNumber) {
+    EoneoPay.prototype.getPaymentSystem = function (cardNumber) {
         var cardType = this.getCardTypeByNumber(String(cardNumber));
         return cardType ? cardType.name : '';
+    };
+    EoneoPay.prototype.getCardNameBasedOnNumber = function (cardNumber) {
+        return this.getPaymentSystem(cardNumber);
     };
     EoneoPay.prototype.validateAccountNumber = function (accountNumber) {
         return /^[0-9]{6,9}$/.test(String(accountNumber));
@@ -180,17 +262,75 @@ var EoneoPay = /** @class */ (function () {
         var luhnValid = this.luhnCheck(cardNumber);
         return lengthValid && luhnValid;
     };
-    EoneoPay.prototype.tokeniseCard = function (data) {
-        data.type = 'credit_card';
-        return this.sendRequest('POST', '/tokens', JSON.stringify(data));
+    EoneoPay.prototype.tokeniseCard = function (data, callback) {
+        return this.tokenizeCard(data, callback);
     };
-    EoneoPay.prototype.tokeniseAccount = function (data) {
+    EoneoPay.prototype.tokenizeCard = function (data, callback) {
+        var errors = [];
+        if (!this.validateCardNumber(data.number)) {
+            errors.push(msg.invalidCardNumber);
+        }
+        if (!this.validateAccountName(data.name)) {
+            errors.push(msg.invalidCardName);
+        }
+        if (!data.expiry) {
+            errors.push(msg.expiryRequired);
+        }
+        else if (data.expiry.month.length !== 2) {
+            errors.push(msg.expiryMonthLength);
+        }
+        else if (!/^(.{2}|.{4})$/.test(data.expiry.year)) {
+            errors.push(msg.expiryYearLength);
+        }
+        if (errors.length) {
+            // @ts-ignore
+            return emitError(errors, callback);
+        }
+        data.type = 'credit_card';
+        return this.sendRequest({
+            type: 'POST',
+            endpoint: '/tokens',
+            data: data,
+            callback: callback,
+        });
+    };
+    EoneoPay.prototype.tokeniseAccount = function (data, callback) {
+        return this.tokenizeAccount(data, callback);
+    };
+    EoneoPay.prototype.tokenizeAccount = function (data, callback) {
+        var errors = [];
+        if (!this.validateAccountNumber(data.number)) {
+            errors.push(msg.invalidAccountNumber);
+        }
+        if (!this.validateAccountName(data.name)) {
+            errors.push(msg.invalidAccountName);
+        }
+        if (!data.prefix) {
+            errors.push(msg.accountPrefixRequired);
+        }
+        if (errors.length) {
+            // @ts-ignore
+            return emitError(errors, callback);
+        }
         data.country = 'AU';
         data.type = 'bank_account';
-        return this.sendRequest('POST', '/tokens', JSON.stringify(data));
+        return this.sendRequest({
+            type: 'POST',
+            endpoint: '/tokens',
+            data: data,
+            callback: callback,
+        });
     };
-    EoneoPay.prototype.getTokenInfo = function (token) {
-        return this.sendRequest('GET', '/tokens/' + token);
+    EoneoPay.prototype.getTokenInfo = function (token, callback) {
+        if (!token) {
+            // @ts-ignore
+            return emitError(msg.tokenRequired, callback);
+        }
+        return this.sendRequest({
+            type: 'GET',
+            endpoint: "/tokens/" + token,
+            callback: callback,
+        });
     };
     return EoneoPay;
 }());
