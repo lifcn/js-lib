@@ -5,14 +5,14 @@ export interface EoneoPayConstructor {
   url?: string
 }
 
-export interface EoneoTokeniseCardPayload {
+export interface EoneoTokenizeCardPayload {
   expiry: EoneoExpiry,
   name: string
   number: string
   type?: EoneoTokenType
 }
 
-export interface EoneoTokeniseAccountPayload {
+export interface EoneoTokenizeAccountPayload {
   name: string
   number: string
   prefix: string
