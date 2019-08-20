@@ -154,6 +154,10 @@ export default class EoneoPay {
     return this.getPaymentSystem(cardNumber)
   }
 
+  cardNameForNumber(cardNumber: string | number): string {
+    return this.getPaymentSystem(cardNumber)
+  }
+
   validateAccountNumber(accountNumber: string | number): boolean {
     return /^[0-9]{6,9}$/.test(String(accountNumber))
   }
