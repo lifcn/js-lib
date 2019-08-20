@@ -1,6 +1,6 @@
 
 export interface CardType {
-  name: string
+  type: string
   patterns: RegExp
   length: RegExp
   format: RegExp
@@ -10,7 +10,7 @@ export interface CardType {
 
 export const CARD_TYPES: CardType[] = [
   {
-    name: 'visaelectron',
+    type: 'visaelectron',
     patterns: /^(4026|417500|4405|4508|4844|4913|4917)/,
     format: /(\d{1,4})/g,
     length: /^16$/,
@@ -18,7 +18,7 @@ export const CARD_TYPES: CardType[] = [
     luhn: true
   },
   {
-    name: 'maestro',
+    type: 'maestro',
     patterns: /^(5018|502|503|56|58|639|6220|67)/,
     format: /(\d{1,4})/g,
     length: /^(12|13|14|15|16|17|18|19)/,
@@ -26,7 +26,7 @@ export const CARD_TYPES: CardType[] = [
     luhn: true
   },
   {
-    name: 'forbrugsforeningen',
+    type: 'forbrugsforeningen',
     patterns: /^600/,
     format: /(\d{1,4})/g,
     length: /^16$/,
@@ -34,7 +34,7 @@ export const CARD_TYPES: CardType[] = [
     luhn: true
   },
   {
-    name: 'dankort',
+    type: 'dankort',
     patterns: /^5019/,
     format: /(\d{1,4})/g,
     length: /^16$/,
@@ -42,7 +42,7 @@ export const CARD_TYPES: CardType[] = [
     luhn: true
   },
   {
-    name: 'visa',
+    type: 'visa',
     patterns: /^4/,
     format: /(\d{1,4})/g,
     length: /^(13|16)/,
@@ -50,7 +50,7 @@ export const CARD_TYPES: CardType[] = [
     luhn: true
   },
   {
-    name: 'mastercard',
+    type: 'mastercard',
     patterns: /^(51|52|53|54|55|22|23|24|25|26|27)/,
     format: /(\d{1,4})/g,
     length: /^(13|16)/,
@@ -58,7 +58,7 @@ export const CARD_TYPES: CardType[] = [
     luhn: true
   },
   {
-    name: 'amex',
+    type: 'amex',
     patterns: /^(34|37)/,
     format: /(\d{1,4})(\d{1,6})?(\d{1,5})?/,
     length: /^15$/,
@@ -66,7 +66,7 @@ export const CARD_TYPES: CardType[] = [
     luhn: true
   },
   {
-    name: 'dinersclub',
+    type: 'dinersclub',
     patterns: /^(30|36|38|39)/,
     format: /(\d{1,4})(\d{1,6})?(\d{1,4})?/,
     length: /^14$/,
@@ -74,7 +74,7 @@ export const CARD_TYPES: CardType[] = [
     luhn: true
   },
   {
-    name: 'discover',
+    type: 'discover',
     patterns: /^(60|64|65|622)/,
     format: /(\d{1,4})/g,
     length: /^16$/,
@@ -82,7 +82,7 @@ export const CARD_TYPES: CardType[] = [
     luhn: true,
   },
   {
-    name: 'unionpay',
+    type: 'unionpay',
     patterns: /^(62|88)/,
     format: /(\d{1,4})/g,
     length: /^(16|17|18|19)/,
@@ -90,7 +90,7 @@ export const CARD_TYPES: CardType[] = [
     luhn: false,
   },
   {
-    name: 'jcb',
+    type: 'jcb',
     patterns: /^35/,
     format: /(\d{1,4})/g,
     length: /^16$/,

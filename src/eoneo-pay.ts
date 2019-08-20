@@ -3,7 +3,6 @@ import {
   EoneoCallback,
   EoneoTokenizeCardPayload,
   EoneoTokenizeAccountPayload,
-  EoneoError,
 } from 'types/library'
 import {
   EoneoAccount,
@@ -36,12 +35,6 @@ export default class EoneoPay {
     }
 
     return 'https://pay.eoneopay.com'
-  }
-
-  private getCardTypeByNumber(cardNumber: string = ''): CardType | undefined {
-    return CARD_TYPES.find(cardType => {
-      return cardType.patterns.test(cardNumber)
-    })
   }
 
   private luhnCheck(cardNumber: string): boolean {
@@ -135,16 +128,26 @@ export default class EoneoPay {
     }
   }
 
-  getCardTypeByName(name: string = ''): CardType | undefined {
+  cardTypeForNumber(cardNumber: string = ''): CardType | undefined {
+    return this.getCardTypeByNumber(cardNumber)
+  }
+
+  getCardTypeByNumber(cardNumber: string = ''): CardType | undefined {
     return CARD_TYPES.find(cardType => {
-      return cardType.name === name
+      return cardType.patterns.test(cardNumber)
+    })
+  }
+
+  getCardTypeByName(type: string = ''): CardType | undefined {
+    return CARD_TYPES.find(cardType => {
+      return cardType.type === type
     })
   }
 
   getPaymentSystem(cardNumber: string | number): string {
     const cardType = this.getCardTypeByNumber(String(cardNumber))
 
-    return cardType ? cardType.name : ''
+    return cardType ? cardType.type : ''
   }
 
   getCardNameBasedOnNumber(cardNumber: string | number): string {
@@ -253,6 +256,13 @@ export default class EoneoPay {
       endpoint: '/tokens',
       data,
       callback,
+    })
+  }
+
+  retrieveToken(data: EoneoTokenizeCardPayload, resolve: any, reject: any) {
+    this.tokeniseCard(data, (error, response) => {
+      if (error) reject(error)
+      else resolve(response)
     })
   }
 
