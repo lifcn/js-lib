@@ -25,7 +25,7 @@ export default {
       this.error = ''
 
       try {
-        const eoneo = new EoneoPay(process.env.EONEO_API_KEY)
+        const eoneo = new EoneoPay({ token: process.env.EONEO_API_KEY, url: process.env.EONEO_API_URL })
         const response = await eoneo.getTokenInfo(this.form.token)
 
         this.response = response

@@ -4,18 +4,11 @@
 
 You can create **EoneoPay** instance with one token argument.
 
-```javascript
-const eoneo = new EoneoPay('MN6FWJJ3P77WHAE6')
-```
+<EoneoInitiation :additional='false' />
 
 Also, you can pass an object with parameters.
 
-```javascript
-const eoneo = new EoneoPay({
-  token: 'MN6FWJJ3P77WHAE6',
-  url: 'https://pay.eoneopay.com',
-})
-```
+<EoneoInitiation :additional='true' />
 
 ## Tokenize
 

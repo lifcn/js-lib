@@ -10,8 +10,8 @@ module.exports = {
   ],
   configureWebpack: (config) => {
     return { plugins: [
-        new webpack.EnvironmentPlugin({ ...process.env })
-      ]}
+      new webpack.EnvironmentPlugin({ ...process.env })
+    ]}
   },
   chainWebpack(config) {
     config
