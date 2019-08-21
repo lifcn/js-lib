@@ -8,6 +8,9 @@ module.exports = {
   head: [
     ['script', { src: '/eoneo-pay.iife.js' }]
   ],
+  themeConfig: {
+    sidebar: 'auto'
+  },
   configureWebpack: (config) => {
     return { plugins: [
       new webpack.EnvironmentPlugin({ ...process.env })

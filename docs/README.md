@@ -187,6 +187,8 @@ eoneo.getPaymentSystem('5123450000000008') // => 'mastercard'
 eoneo.getPaymentSystem('4560656891897152') // => 'visa'
 ```
 
+<Helpers :getPaymentSystem="true" />
+
 ### Bank account number validation
 
 ```javascript

@@ -18,6 +18,16 @@ export default {
     disabled() {
       return this.processing
     },
+    date: {
+      get() {
+        return `${this.form.month}/${this.form.year}`
+      },
+      set(value) {
+        const parsed = value.split('/')
+        this.form.month = parsed[0] || ''
+        this.form.year = parsed[1] || ''
+      },
+    },
   },
   methods: {
     async onSubmit() {
@@ -56,28 +66,28 @@ export default {
         v-model="form.number"
         :class="$style.inputNumber"
         :disabled="disabled"
+        :unmask="true"
+        :lazy="true"
+        mask="0000 0000 0000 0000"
+        placeholder="0000 0000 0000 0000"
         label="Card Number"
-      />
-      <base-input
-        v-model="form.month"
-        :class="$style.inputMonth"
-        :disabled="disabled"
-        :unmasked="true"
-        :mask="/^(\d){0,2}$/"
-        label="Month"
-      />
-      <base-input
-        v-model="form.year"
-        :class="$style.inputYear"
-        :disabled="disabled"
-        :mask="/^(\d){0,4}$/"
-        label="Year"
       />
       <base-input
         v-model="form.name"
         :class="$style.inputName"
         :disabled="disabled"
+        :lazy="true"
+        :mask="/^([a-zA-Z.\'\-]*[a-zA-Z.]+\s)*([a-zA-Z.\'\-]+)?$/"
         label="Card Holder"
+      />
+      <base-input
+        v-model="date"
+        :class="$style.inputDate"
+        :disabled="disabled"
+        :lazy="true"
+        mask="00 / 00"
+        placeholder="MM / YY"
+        label="Month"
       />
       <base-button
         type="submit"
@@ -109,10 +119,13 @@ export default {
   margin-left: 1rem;
 }
 
-.inputMonth,
-.inputYear {
-  width: 80px;
-  margin-left: 1rem;
+.inputDate {
+  width: 81px;
+  margin-right: 1rem;
+}
+
+.inputNumber {
+  flex-grow: 1;
 }
 
 @media (max-width: 719px) {
@@ -120,14 +133,9 @@ export default {
     flex-wrap: wrap;
   }
 
-  .inputNumber {
-    width: 50%;
-  }
-
-  .inputMonth,
-  .inputYear {
+  .inputDate {
     flex-grow: 1;
-    width: 80px;
+    width: 81px;
   }
 
   .inputName {
