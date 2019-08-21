@@ -3,7 +3,6 @@ export default {
   name: 'TokenizeCardForm',
   data: function() {
     return {
-      eoneo: new EoneoPay('MN6FWJJ3P77WHAE6'),
       form: {
         month: '01',
         year: "21",
@@ -29,7 +28,8 @@ export default {
       this.error = ''
 
       try {
-        const response = await this.eoneo.tokenizeCard({
+        const eoneo = new EoneoPay(process.env.EONEO_API_KEY)
+        const response = await eoneo.tokenizeCard({
           name: form.name,
           number: form.number,
           expiry: {
