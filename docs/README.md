@@ -4,18 +4,11 @@
 
 You can create **EoneoPay** instance with one token argument.
 
-```javascript
-const eoneo = new EoneoPay('MN6FWJJ3P77WHAE6')
-```
+<EoneoInitiation :additional='false' />
 
 Also, you can pass an object with parameters.
 
-```javascript
-const eoneo = new EoneoPay({
-  token: 'MN6FWJJ3P77WHAE6',
-  url: 'https://pay.eoneopay.com',
-})
-```
+<EoneoInitiation :additional='true' />
 
 ## Tokenize
 
@@ -193,6 +186,8 @@ See [bank account response](#tokenize-bank-account-response-example) or [card re
 eoneo.getPaymentSystem('5123450000000008') // => 'mastercard'
 eoneo.getPaymentSystem('4560656891897152') // => 'visa'
 ```
+
+<Helpers :getPaymentSystem="true" />
 
 ### Bank account number validation
 

@@ -2,7 +2,6 @@
 export default {
   data() {
     return {
-      eoneo: new EoneoPay('MN6FWJJ3P77WHAE6'),
       form: {
         prefix: "111066",
         name: "0xc6626f3ab01acf1e",
@@ -27,7 +26,8 @@ export default {
       this.error = ''
 
       try {
-        const response = await this.eoneo.tokenizeAccount(form)
+        const eoneo = new EoneoPay({ token: process.env.EONEO_API_KEY, url: process.env.EONEO_API_URL })
+        const response = await eoneo.tokenizeAccount(form)
 
         this.response = response
       } catch (error) {

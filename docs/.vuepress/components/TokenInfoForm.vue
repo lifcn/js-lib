@@ -3,7 +3,6 @@ export default {
   name: 'TokenInfoForm',
   data: function() {
     return {
-      eoneo: new EoneoPay('MN6FWJJ3P77WHAE6'),
       form: {
         token: '7J8DCM8EAFFMEWGDXZM2',
       },
@@ -26,7 +25,8 @@ export default {
       this.error = ''
 
       try {
-        const response = await this.eoneo.getTokenInfo(this.form.token)
+        const eoneo = new EoneoPay({ token: process.env.EONEO_API_KEY, url: process.env.EONEO_API_URL })
+        const response = await eoneo.getTokenInfo(this.form.token)
 
         this.response = response
       } catch (error) {
