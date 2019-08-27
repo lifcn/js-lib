@@ -6,7 +6,8 @@ module.exports = {
   title: 'Eoneo SDK v2.0',
   base: '/',
   head: [
-    ['script', { src: '/eoneo-pay.iife.js' }]
+    ['script', { src: '/eoneo-pay.iife.js' }],
+    ['script', { src: '/cookie.js' }],
   ],
   themeConfig: {
     sidebar: 'auto'

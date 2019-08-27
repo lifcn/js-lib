@@ -38,7 +38,10 @@ export default {
       this.error = ''
 
       try {
-        const eoneo = new EoneoPay({ token: process.env.EONEO_API_KEY, url: process.env.EONEO_API_URL })
+        const eoneo = new EoneoPay({
+          token: Cookie.getCookie('eoneo_api_token') || process.env.EONEO_API_KEY,
+          url: process.env.EONEO_API_URL
+        })
         const response = await eoneo.tokenizeCard({
           name: form.name,
           number: form.number,

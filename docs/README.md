@@ -10,6 +10,10 @@ Also, you can pass an object with parameters.
 
 <EoneoInitiation :additional='true' />
 
+#### Set your own token for this doc
+
+<TokenForm />
+
 ## Tokenize
 
 ### Tokenize card
@@ -50,6 +54,27 @@ eoneo.tokenizeCard(
     } else {
       // use response
     }
+  }
+)
+```
+
+#### Backward compatibility
+
+```javascript
+eoneo.retrieveToken(
+  {
+    expiry: {
+      month: '11',
+      year: '2099',
+    },
+    name: 'User Name',
+    number: '5123450000000008',
+  },
+  response => {
+    // use response
+  },
+  error => {
+    // handle exception
   }
 )
 ```
