@@ -14,7 +14,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "run-p watch docs:dev",
-    "docs:dev": "set EONEO_API_KEY=MN6FWJJ3P77WHAE6&set EONEO_API_URL=https://pay.eoneopay.com&vuepress dev docs",
+    "docs:dev": "cross-env EONEO_API_KEY=MN6FWJJ3P77WHAE6 EONEO_API_URL=https://pay.eoneopay.com vuepress dev docs",
     "docs:build": "vuepress build docs",
     "lint": "eslint . --fix --ext .js,.vue && stylelint \"docs/.vuepress/**/*.vue\" \"docs/.vuepress/**/*.scss\" --fix && prettier --list-different --write \"**/*.{json,md}\" && markdownlint **/*.md",
     "test": "jest",
