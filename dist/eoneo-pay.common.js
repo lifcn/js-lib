@@ -2,7 +2,7 @@
 
 var CARD_TYPES = [
     {
-        name: 'visaelectron',
+        type: 'visaelectron',
         patterns: /^(4026|417500|4405|4508|4844|4913|4917)/,
         format: /(\d{1,4})/g,
         length: /^16$/,
@@ -10,7 +10,7 @@ var CARD_TYPES = [
         luhn: true
     },
     {
-        name: 'maestro',
+        type: 'maestro',
         patterns: /^(5018|502|503|56|58|639|6220|67)/,
         format: /(\d{1,4})/g,
         length: /^(12|13|14|15|16|17|18|19)/,
@@ -18,7 +18,7 @@ var CARD_TYPES = [
         luhn: true
     },
     {
-        name: 'forbrugsforeningen',
+        type: 'forbrugsforeningen',
         patterns: /^600/,
         format: /(\d{1,4})/g,
         length: /^16$/,
@@ -26,7 +26,7 @@ var CARD_TYPES = [
         luhn: true
     },
     {
-        name: 'dankort',
+        type: 'dankort',
         patterns: /^5019/,
         format: /(\d{1,4})/g,
         length: /^16$/,
@@ -34,7 +34,7 @@ var CARD_TYPES = [
         luhn: true
     },
     {
-        name: 'visa',
+        type: 'visa',
         patterns: /^4/,
         format: /(\d{1,4})/g,
         length: /^(13|16)/,
@@ -42,7 +42,7 @@ var CARD_TYPES = [
         luhn: true
     },
     {
-        name: 'mastercard',
+        type: 'mastercard',
         patterns: /^(51|52|53|54|55|22|23|24|25|26|27)/,
         format: /(\d{1,4})/g,
         length: /^(13|16)/,
@@ -50,7 +50,7 @@ var CARD_TYPES = [
         luhn: true
     },
     {
-        name: 'amex',
+        type: 'amex',
         patterns: /^(34|37)/,
         format: /(\d{1,4})(\d{1,6})?(\d{1,5})?/,
         length: /^15$/,
@@ -58,7 +58,7 @@ var CARD_TYPES = [
         luhn: true
     },
     {
-        name: 'dinersclub',
+        type: 'dinersclub',
         patterns: /^(30|36|38|39)/,
         format: /(\d{1,4})(\d{1,6})?(\d{1,4})?/,
         length: /^14$/,
@@ -66,7 +66,7 @@ var CARD_TYPES = [
         luhn: true
     },
     {
-        name: 'discover',
+        type: 'discover',
         patterns: /^(60|64|65|622)/,
         format: /(\d{1,4})/g,
         length: /^16$/,
@@ -74,7 +74,7 @@ var CARD_TYPES = [
         luhn: true,
     },
     {
-        name: 'unionpay',
+        type: 'unionpay',
         patterns: /^(62|88)/,
         format: /(\d{1,4})/g,
         length: /^(16|17|18|19)/,
@@ -82,7 +82,7 @@ var CARD_TYPES = [
         luhn: false,
     },
     {
-        name: 'jcb',
+        type: 'jcb',
         patterns: /^35/,
         format: /(\d{1,4})/g,
         length: /^16$/,
@@ -154,12 +154,6 @@ var EoneoPay = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    EoneoPay.prototype.getCardTypeByNumber = function (cardNumber) {
-        if (cardNumber === void 0) { cardNumber = ''; }
-        return CARD_TYPES.find(function (cardType) {
-            return cardType.patterns.test(cardNumber);
-        });
-    };
     EoneoPay.prototype.luhnCheck = function (cardNumber) {
         var arr = [0, 2, 4, 6, 8, 1, 3, 5, 7, 9];
         var len = cardNumber.length;
@@ -234,17 +228,30 @@ var EoneoPay = /** @class */ (function () {
             wrapper();
         }
     };
-    EoneoPay.prototype.getCardTypeByName = function (name) {
-        if (name === void 0) { name = ''; }
+    EoneoPay.prototype.cardTypeForNumber = function (cardNumber) {
+        if (cardNumber === void 0) { cardNumber = ''; }
+        return this.getCardTypeByNumber(cardNumber);
+    };
+    EoneoPay.prototype.getCardTypeByNumber = function (cardNumber) {
+        if (cardNumber === void 0) { cardNumber = ''; }
         return CARD_TYPES.find(function (cardType) {
-            return cardType.name === name;
+            return cardType.patterns.test(cardNumber);
+        });
+    };
+    EoneoPay.prototype.getCardTypeByName = function (type) {
+        if (type === void 0) { type = ''; }
+        return CARD_TYPES.find(function (cardType) {
+            return cardType.type === type;
         });
     };
     EoneoPay.prototype.getPaymentSystem = function (cardNumber) {
         var cardType = this.getCardTypeByNumber(String(cardNumber));
-        return cardType ? cardType.name : '';
+        return cardType ? cardType.type : '';
     };
     EoneoPay.prototype.getCardNameBasedOnNumber = function (cardNumber) {
+        return this.getPaymentSystem(cardNumber);
+    };
+    EoneoPay.prototype.cardNameForNumber = function (cardNumber) {
         return this.getPaymentSystem(cardNumber);
     };
     EoneoPay.prototype.validateAccountNumber = function (accountNumber) {
@@ -319,6 +326,14 @@ var EoneoPay = /** @class */ (function () {
             endpoint: '/tokens',
             data: data,
             callback: callback,
+        });
+    };
+    EoneoPay.prototype.retrieveToken = function (data, resolve, reject) {
+        this.tokeniseCard(data, function (error, response) {
+            if (error)
+                reject(error);
+            else
+                resolve(response);
         });
     };
     EoneoPay.prototype.getTokenInfo = function (token, callback) {
