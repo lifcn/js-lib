@@ -57,7 +57,7 @@ export default {
         :disabled="disabled"
         @click="onSubmit"
       >
-        Tokenize
+        Get Info
       </base-button>
     </div>
 

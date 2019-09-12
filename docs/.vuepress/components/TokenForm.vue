@@ -30,7 +30,7 @@ export default {
     <base-input
       v-model="form.token"
       :class="$style.input"
-      label="Token"
+      label="Payments API Key"
       type="text"
     />
     <base-button
