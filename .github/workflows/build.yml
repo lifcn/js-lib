@@ -1,0 +1,37 @@
+name: JS SDK for Eoneo V2 CI
+
+on: 
+  push:
+    branches:
+    - feat/DEV-1
+
+jobs:
+  build:
+    name: build dist and upload to aws s3 bucket 
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: yarn install and build
+      run: |
+        yarn install
+        yarn build
+      env:
+        CI: true
+    - name: upload build artifacts to AWS s3 bucket and create CDN invalidation
+      uses: ./s3-sync-action
+      env:
+        SOURCE_DIR: '/github/workspace/dist' 
+        AWS_S3_BUCKET: 'dev.js.eoneopay.com'
+        AWS_ACCESS_KEY_ID: ${{secrets.DEV_AWS_KEY_ID}}
+        AWS_SECRET_ACCESS_KEY: ${{secrets.DEV_AWS_KEY_SECRET}}
+        AWS_REGION: ap-southeast-2 
+        CDN_DISTRIBUTION_ID: E14JXJO0HBZ3PA
