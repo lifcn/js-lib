@@ -3,7 +3,7 @@ const webpack = require('webpack');
 require('dotenv').config();
 
 module.exports = {
-  title: 'Eoneo SDK v2.0',
+  title: 'EoneoPay JavaScript SDK v2',
   base: '/',
   head: [
     ['script', { src: '/eoneo-pay.iife.js' }],

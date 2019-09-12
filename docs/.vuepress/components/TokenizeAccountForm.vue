@@ -4,7 +4,7 @@ export default {
     return {
       form: {
         prefix: "111066",
-        name: "0xc6626f3ab01acf1e",
+        name: "User Name",
         number: "254280294",
       },
       processing: false,
@@ -72,7 +72,7 @@ export default {
         :class="$style.submit"
         @click="onSubmit"
       >
-        Tokenize
+        Tokenise
       </base-button>
     </div>
 

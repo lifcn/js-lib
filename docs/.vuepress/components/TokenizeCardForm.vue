@@ -98,7 +98,7 @@ export default {
         :class="$style.submit"
         @click="onSubmit"
       >
-        Tokenize
+        Tokenise
       </base-button>
     </div>
 
