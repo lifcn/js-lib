@@ -1,6 +1,6 @@
 {
   "name": "@loyaltycorp/eoneo-js-sdk",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "author": "Loyalty Corp Australia",
   "main": "dist/eoneopay.common.js",
   "browser": "dist/eoneopay.js",
