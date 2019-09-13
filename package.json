@@ -16,7 +16,8 @@
     "url": "ssh://git@github.com/loyaltycorp/eoneo-js-sdk-v2.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@loyaltycorp"
+    "registry": "https://npm.pkg.github.com/@loyaltycorp",
+    "access": "restricted"
   },
   "license": "MIT",
   "scripts": {
