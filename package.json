@@ -29,7 +29,7 @@
     "test:watch": "jest --watch",
     "build": "rm -rf dist && rollup -c",
     "watch": "rollup -c -w",
-    "release": "semantic-release -t 'v${version}' --no-ci"
+    "release": "semantic-release -t 'v${version}' -d false"
   },
   "husky": {
     "hooks": {
