@@ -452,3 +452,5 @@ The `validateCardNumber()` method validates the provided credit card number. The
 ```javascript
 eoneo.validateCardNumber('5123450000000008') // => true/false
 ```
+
+### Test
