@@ -23,7 +23,7 @@ export default {
       'issuer': 'U.S. BANK NATIONAL ASSOCIATION, ND',
       'prepaid': null,
       'scheme': 'MASTERCARD',
-      'updated_at': '2019-01-29T21:54:16Z'
+      'updated_at': '2019-01-29T21:54:17Z'
     },
     'created_at': '2019-01-29T21:54:16Z',
     'expiry': {
