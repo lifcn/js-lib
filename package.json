@@ -18,7 +18,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/@loyaltycorp",
     "access": "restricted",
-    "tag": "next"
+    "tag": "latest"
   },
   "license": "MIT",
   "scripts": {
