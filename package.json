@@ -1,6 +1,6 @@
 {
   "name": "@loyaltycorp/eoneo-js-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Loyalty Corp Australia",
   "main": "dist/eoneopay.common.js",
   "browser": "dist/eoneopay.js",
@@ -16,7 +16,7 @@
     "url": "ssh://git@github.com/loyaltycorp/eoneo-js-sdk-v2.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@loyaltycorp",
+    "registry": "https://npm.pkg.github.com",
     "access": "restricted",
     "tag": "latest"
   },
