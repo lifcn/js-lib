@@ -3,16 +3,16 @@ name: JS SDK for Eoneo V2 CI
 on: 
   push:
     branches:
-    - feat/DEV-1
+    - master
 
 jobs:
   build:
-    name: build dist and upload to aws s3 bucket 
+    name: release new package and upload to aws s3 bucket 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x]
+        node-version: [12.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -20,18 +20,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: yarn install and build
+    - name: configure TOKENs
       run: |
-        yarn install
-        yarn build
+        echo $GITHUB_TOKEN
+        echo $GITHUB_ACCESS_TOKEN
+        echo $NPM_TOKEN
+        node --version
+        npm --version
       env:
-        CI: true
-    - name: upload build artifacts to AWS s3 bucket and create CDN invalidation
-      uses: ./s3-sync-action
-      env:
-        SOURCE_DIR: '/github/workspace/dist' 
-        AWS_S3_BUCKET: 'dev.js.eoneopay.com'
-        AWS_ACCESS_KEY_ID: ${{secrets.DEV_AWS_KEY_ID}}
-        AWS_SECRET_ACCESS_KEY: ${{secrets.DEV_AWS_KEY_SECRET}}
-        AWS_REGION: ap-southeast-2 
-        CDN_DISTRIBUTION_ID: E14JXJO0HBZ3PA
+        GITHUB_TOKEN: ${{secrets.EONEO_ACCESS_TOKEN}}
+        GITHUB_ACCESS_TOKEN: ${{secrets.EONEO_ACCESS_TOKEN}}
+        NPM_TOKEN: ${{secrets.EONEO_ACCESS_TOKEN}}
+  
