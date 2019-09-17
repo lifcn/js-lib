@@ -27,6 +27,8 @@ jobs:
         echo $NPM_TOKEN
         node --version
         npm --version
+        cd
+        cat .npmrc
       env:
         GITHUB_TOKEN: ${{secrets.EONEO_ACCESS_TOKEN}}
         GITHUB_ACCESS_TOKEN: ${{secrets.EONEO_ACCESS_TOKEN}}
