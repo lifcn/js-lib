@@ -33,7 +33,7 @@ jobs:
         pwd
         ls -la
         
-        cd work
+        cd ${GITHUB_WORKSPACE}
         ls -la
         npm install --save-dev semantic-release
         npx semantic-release
