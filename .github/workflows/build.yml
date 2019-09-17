@@ -25,14 +25,16 @@ jobs:
         echo $GITHUB_TOKEN
         echo $GITHUB_ACCESS_TOKEN
         echo $NPM_TOKEN
-        
+
         node --version
         npm --version
 
         cd
         pwd
         ls -la
-
+        
+        cd work
+        ls -la
         npm install --save-dev semantic-release
         npx semantic-release
       env:
