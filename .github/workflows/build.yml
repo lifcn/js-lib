@@ -35,6 +35,8 @@ jobs:
         
         cd ${GITHUB_WORKSPACE}
         ls -la
+        cat .npmrc
+        npm install
         npm install --save-dev semantic-release
         npx semantic-release
       env:
