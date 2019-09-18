@@ -22,9 +22,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: configure and install semantic-release
       env:
-        GITHUB_TOKEN: ${{ secrets.EONEO_ACCESS_TOKEN }}
-        GITHUB_ACCESS_TOKEN: ${{ secrets.EONEO_ACCESS_TOKEN }}
-        NPM_TOKEN: ${{ secrets.EONEO_ACCESS_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.DEV_CI_TOKEN }}
+        GITHUB_ACCESS_TOKEN: ${{ secrets.DEV_CI_TOKEN }}
+        NPM_TOKEN: ${{ secrets.DEV_CI_TOKEN }}
       run: |
         npm install
         yarn release
