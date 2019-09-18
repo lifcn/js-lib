@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.5.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.4.0...v1.5.0) (2019-09-18)
+
+### Features
+
+- **dev-1:** update build.yml ([63bd6c4](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/63bd6c4))
+
 # [1.4.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.3.0...v1.4.0) (2019-09-17)
 
 ### Features
