@@ -29,5 +29,5 @@ jobs:
         git remote -v
         git remote set-url origin https://github.com/loyaltycorp/eoneo-js-sdk-v2.git
         git remote -v
-        # npm install
-        # yarn release
+        npm install
+        yarn release
