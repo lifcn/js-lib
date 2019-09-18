@@ -1,5 +1,15 @@
 # Changelog
 
+# [1.6.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.5.0...v1.6.0) (2019-09-18)
+
+### Features
+
+- **dev-1:** create and add DEV_CI_TOKEN ([bec3d4b](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/bec3d4b))
+- **dev-1:** install and np ([587b5ff](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/587b5ff))
+- **dev-1:** install and release ([5312244](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/5312244))
+- **dev-1:** reset repo url and release ([5a66f10](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/5a66f10))
+- **dev-1:** set remote repo url to https ([f7babb3](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/f7babb3))
+
 # [1.5.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.4.0...v1.5.0) (2019-09-18)
 
 ### Features
