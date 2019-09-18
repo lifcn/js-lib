@@ -26,8 +26,8 @@ jobs:
         GITHUB_ACCESS_TOKEN: ${{ secrets.DEV_CI_TOKEN }}
         NPM_TOKEN: ${{ secrets.DEV_CI_TOKEN }}
       run: |
-        #git remote -v
-        #git remote set-url origin https://github.com/loyaltycorp/eoneo-js-sdk-v2.git
+        git remote -v
+        git remote set-url origin https://github.com/loyaltycorp/eoneo-js-sdk-v2.git
         git remote -v
         npm install
-        yarn release
+        npx semantic-release
