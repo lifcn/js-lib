@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: release new package and upload to aws s3 bucket 
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
 
     strategy:
       matrix:
@@ -20,27 +20,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: configure TOKENs
-      run: |
-        echo $GITHUB_TOKEN
-        echo $GITHUB_ACCESS_TOKEN
-        echo $NPM_TOKEN
-
-        node --version
-        npm --version
-
-        cd
-        pwd
-        ls -la
-        
-        cd ${GITHUB_WORKSPACE}
-        ls -la
-        cat .npmrc
-        npm install
-        npm install --save-dev semantic-release
-        npx semantic-release
+    - name: configure and install semantic-release
       env:
-        GITHUB_TOKEN: ${{secrets.EONEO_ACCESS_TOKEN}}
-        GITHUB_ACCESS_TOKEN: ${{secrets.EONEO_ACCESS_TOKEN}}
-        NPM_TOKEN: ${{secrets.EONEO_ACCESS_TOKEN}}
-  
+        GITHUB_TOKEN: ${{ secrets.EONEO_ACCESS_TOKEN }}
+        GITHUB_ACCESS_TOKEN: ${{ secrets.EONEO_ACCESS_TOKEN }}
+        NPM_TOKEN: ${{ secrets.EONEO_ACCESS_TOKEN }}
+      run: |
+        npm install
+        yarn release
