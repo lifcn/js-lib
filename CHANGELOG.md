@@ -1,5 +1,20 @@
 # Changelog
 
+# [1.7.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.6.0...v1.7.0) (2019-09-19)
+
+### Features
+
+- **dev-1:** cd home directory ([59ba176](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/59ba176))
+- **dev-1:** change directory ([f062ab6](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/f062ab6))
+- **dev-1:** checkout ([e03c341](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/e03c341))
+- **dev-1:** correct error in ci-yarn-release/Dockerfile ([2934caf](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/2934caf))
+- **dev-1:** correct errors in build.yml ([9b519f1](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/9b519f1))
+- **dev-1:** correct errors in build.yml ([2015d21](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/2015d21))
+- **dev-1:** correct errors in Dockerfile ([97b7579](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/97b7579))
+- **dev-1:** create ci-yarn-release container ([5051642](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/5051642))
+- **dev-1:** create dir and touch a file ([0d10f41](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/0d10f41))
+- **dev-1:** create known hosts ([f04cec2](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/f04cec2))
+
 # [1.6.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.5.0...v1.6.0) (2019-09-18)
 
 ### Features
