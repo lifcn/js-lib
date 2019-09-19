@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.13.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.12.0...v1.13.0) (2019-09-19)
+
+### Features
+
+- **dev-1:** remove invalid distribution ([8f93e80](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/8f93e80))
+
 # [1.12.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.11.0...v1.12.0) (2019-09-19)
 
 ### Features
