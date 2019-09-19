@@ -29,3 +29,5 @@ jobs:
         id
         pwd
         ls -la
+        cd
+        ls -la
