@@ -13,4 +13,4 @@ export GITHUB_ACCESS_TOKEN=${DEV_CI_RUNTIME_TOKEN}
 export NPM_TOKEN=${DEV_CI_RUNTIME_TOKEN}
 
 npm install
-yarn release
+yarn release | tee yarn_release_log
