@@ -30,4 +30,8 @@ jobs:
         pwd
         ls -la
         cd
+        pwd
         ls -la
+        mkdir .ssh
+        touch .ssh/known_hosts
+        ls -la .ssh
