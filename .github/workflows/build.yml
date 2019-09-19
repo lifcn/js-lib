@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: release new package and upload to aws s3 bucket 
-    runs-on: macOS-latest
+    runs-on: ubuntuS-latest
 
     strategy:
       matrix:
@@ -20,18 +20,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: configure and install semantic-release
+    - name: yarn release
       env:
-        GITHUB_TOKEN: ${{ secrets.DEV_CI_TOKEN }}
-        GITHUB_ACCESS_TOKEN: ${{ secrets.DEV_CI_TOKEN }}
-        NPM_TOKEN: ${{ secrets.DEV_CI_TOKEN }}
+        DEV_CI_RUNTIME_TOKEN: ${{ secrets.DEV_TEST_TOKEN }}
       run: |
-        cd
-        mkdir .ssh
-        touch .ssh/known_hosts
-        echo "github.com,13.236.229.21 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" >> .ssh/known_hosts
-        cat .ssh/known_hosts
-        cd ${{ GITHUB_WORKSPACE }}
-        pwd
-        ls
-        git remote -v
+        uses: ./ci-yarn-release
