@@ -17,3 +17,12 @@ jobs:
       uses: ./ci-yarn-release
       env:
         DEV_CI_RUNTIME_TOKEN: ${{ secrets.DEV_TEST_TOKEN }}
+#    - name: upload to s3 bucket and update CDN distribution 
+#      uses: ./s3-sync-action
+#      env:
+#        SOURCE_DIR: '/github/workspace/dist'
+#        AWS_S3_BUCKET: 'uat.js.eoneopay.com'
+#        AWS_ACCESS_KEY_ID: ${{ secrets.PROD_AWS_KEY_ID }}
+#        AWS_SECRET_ACCESS_KEY: ${{ secrets.PROD_AWS_KEY_SECRET }}
+#        AWS_REGION: ap-southeast-2
+#        CDN_DISTRIBUTION_ID: E1ARFTGBXVJU1E

@@ -14,3 +14,6 @@ export NPM_TOKEN=${DEV_CI_RUNTIME_TOKEN}
 
 npm install
 yarn release | tee yarn_release_log
+echo '####################'
+tail -n 1 yarn_release_log
+echo '####################'
