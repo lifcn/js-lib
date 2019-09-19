@@ -1,4 +1,4 @@
-FROM python:3.7-alpine
+FROM FROM node:12.10.0
 
 LABEL repository="https://github.com/loyaltycorp/eoneo-js-sdk-v2"
 LABEL homepage="https://github.com/loyaltycorp/eoneo-js-sdk-v2"
