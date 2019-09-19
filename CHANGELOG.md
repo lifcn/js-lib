@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.8.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.7.0...v1.8.0) (2019-09-19)
+
+### Features
+
+- **dev-1:** create yarn release log ([e32d48d](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/e32d48d))
+
 # [1.7.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.6.0...v1.7.0) (2019-09-19)
 
 ### Features
