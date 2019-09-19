@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.9.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.8.0...v1.9.0) (2019-09-19)
+
+### Features
+
+- **dev-1:** prepare upload to s3 bucket ([a08e5d1](https://github.com/loyaltycorp/eoneo-js-sdk-v2/commit/a08e5d1))
+
 # [1.8.0](https://github.com/loyaltycorp/eoneo-js-sdk-v2/compare/v1.7.0...v1.8.0) (2019-09-19)
 
 ### Features
