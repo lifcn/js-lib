@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout Repository
+      uses: actions/checkout@v1
     - name: yarn release
+      uses: ./ci-yarn-release
       env:
         DEV_CI_RUNTIME_TOKEN: ${{ secrets.DEV_TEST_TOKEN }}
-      run: |
-        uses: ./ci-yarn-release
