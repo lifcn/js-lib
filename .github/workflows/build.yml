@@ -8,18 +8,10 @@ on:
 jobs:
   build:
     name: release new package and upload to aws s3 bucket 
-    runs-on: ubuntuS-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
     - name: yarn release
       env:
         DEV_CI_RUNTIME_TOKEN: ${{ secrets.DEV_TEST_TOKEN }}
